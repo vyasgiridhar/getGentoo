@@ -260,11 +260,7 @@ script_write_fstab() {
     # Clear out what's already there, first.
     echo "" > /etc/fstab
 
-    echo "UUID=$FS_BOOT_UUID\t/boot\text4\tdefaults,noatime\t1\t2" >> /etc/fstab
-    echo "UUID=$FS_SWAP_UUID\tnone\tswap\tsw\t0\t0" >> /etc/fstab
-    echo "UUID=$FS_ROOT_UUID\t/\text4\tnoatime\t0\t1" >> /etc/fstab
-    echo "UUID=$FS_HOME_UUID\t/home\text4\tnoatime\t0\t1" >> /etc/fstab
-    echo "/dev/cdrom\t/mnt/cdrom\tauto\tuser,noauto\t0\t0" >> /etc/fstab
+    echo "/dev/sda3\t/\text4\tdefaults\t0\t1" >> /etc/fstab
 }
 
 script_conf_hostname() {
