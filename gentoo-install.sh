@@ -75,7 +75,7 @@ FS_HOME_UUID=d7c17623-255b-4313-b50b-99f0f79a0681
 #assigned later
 FS_ROOT_UUID=""
 
-ETC_CONFD_HOSTNAME="inara"
+ETC_CONFD_HOSTNAME="boombox"
 
 ETC_TIMEZONE="America/Detroit"
 
@@ -98,7 +98,7 @@ EMERGE_DEFAULT_OPTS="--jobs --load-average=${SYS_CPU_TGT} --verbose --tree --kee
 FEATURES="splitdebug"
 LINGUAS="en"
 
-SYS_USE_CPU="mmx sse sse2 sse3 ssse3 openmp opencl cuda posix nptl multilib smp lapack"
+SYS_USE_CPU="mmx sse sse2 sse3 ssse3 openmp opencl posix nptl multilib smp lapack"
 SYS_USE_LANG="perl python"
 SYS_USE_TOOLKITS="gtk"
 SYS_USE_GAPI="gd sdl ncurses xcb opengl v4l vdpau xv X dri"
@@ -108,15 +108,15 @@ SYS_USE_COMPRESSION="bzip2 gzip lzma lzo szip zlib"
 SYS_USE_MEDIA_GFX="imagemagick jpeg jpeg2k openexr png raw svg tiff wmf mng"
 SYS_USE_MEDIA_AUDIO="aac cdda flac gsm lame mad mikmod shorten speex timidity vorbis mp3 midi"
 SYS_USE_MEDIA_VIDEO="css dv ffmpeg theora x264 xvid"
-SYS_USE_MEDIA_CONTAINERS="matroska mms mp4 mpeg ogg pdf quicktime vcd"
+SYS_USE_MEDIA_CONTAINERS="matroska mms mp4 mpeg ogg pdf vcd"
 SYS_USE_MEDIA="${SYS_USE_MEDIA_GFX} ${SYS_USE_MEDIA_AUDIO} ${SYS_USE_MEDIA_VIDEO} ${SYS_USE_MEDIA_CONTAINERS} sound cddb encode exif gimp libsamplerate mtp ppds sndfile sox wavpack xmp latex"
 
 SYS_USE_NET="avahi curl ftp geoip gnutls ipv6 libwww rdesktop samba sockets ssl tcpd vnc"
 SYS_USE_PLATFORM="acpi dbus fam hddtemp ieee1394 joystick libnotify lm_sensors pam readline sharedmem syslog sysvipc threads udev unicode usb"
 
-SYS_USE_DONOTWANT="-pulseaudio -gnome -oss -berkdb -gdbm"
+SYS_USE_DONOTWANT="-pulseaudio -oss -berkdb -gdbm"
 
-USE="${SYS_USE_CPU} ${SYS_USE_LANG} ${SYS_USE_TOOLKITS} ${SYS_USE_GAPI} ${SYS_USE_AAPI} ${SYS_USE_OTHER} ${SYS_USE_MEDIA} ${SYS_USE_COMPRESSION} ${SYS_USE_NET} ${SYS_USE_PLATFORM} ${SYS_USE_DONOTWANT}"
+USE="${SYS_USE_CPU} -gnome -kde -minimal -qt4 dbus jpeg lock session startup-notification thunar udev X" ${SYS_USE_LANG} ${SYS_USE_TOOLKITS} ${SYS_USE_GAPI} ${SYS_USE_AAPI} ${SYS_USE_OTHER} ${SYS_USE_MEDIA} ${SYS_USE_COMPRESSION} ${SYS_USE_NET} ${SYS_USE_PLATFORM} ${SYS_USE_DONOTWANT}"
 
 GENTOO_MIRRORS="http://chi-10g-1-mirror.fastsoft.net/pub/linux/gentoo/gentoo-distfiles/ http://mirrors.cs.wmich.edu/gentoo http://gentoo.mirrors.tds.net/gentoo"
 
@@ -124,11 +124,8 @@ VIDEO_CARDS="nvidia"
 INPUT_DEVICES="evdev"
 ALSA_CARDS=""
 
-ACCEPT_LICENSE="AdobeFlash-10.3"
-# PORTAGE_BINHOST="http://binhost.ossdl.de/x86_64-pc-linux-gnu/"
+#PORTAGE_BINHOST="http://binhost.ossdl.de/x86_64-pc-linux-gnu/"
 
-#PKGDIR="/mnt/r5/pkgdir"
-#PORTAGE_TMPDIR="/mnt/r5/portage_tmp"
 
 CHOST="x86_64-pc-linux-gnu"
 EOF
@@ -214,7 +211,7 @@ read -r -d '' INNER_SCRIPT <<'INNERSCRIPT'
 
 env-update
 source /etc/profile
-export PS1="(autochroot) $PS1" # Not that the user will see this.
+export PS1="(chroot) $PS1" # Not that the user will see this.
 
 # Is there any reason the handbook specifies anything but emerges to be done
 # _after_ the chroot?
@@ -457,7 +454,11 @@ rc-update add vixie-cron default
 rc-update add ssh default
 
 # And not-so-necessary-but-oh-so-nice tools.
-script_emerge app-admin/genlop sys-process/htop app-editors/vim app-portage/eix
+script_emerge app-admin/genlop sys-process/htop app-editors/vim app-portage/eix 
+
+#GUI
+script_emerge xfce-extra/xfce4-mixer xfce-extra/xfce4-taskmanager x11-themes/xfwm4-themes app-office/orage app-editors/mousepad xfce-extra/xfce4-power-manager x11-terms/xfce4-terminal xfce-base/thunar x11-terms/xfce4-terminal xfce-base/xfce4-meta
+echo "exec startxfce4" > ~/.xinitrc
 
 echo "SUCCESS!"
 INNERSCRIPT
