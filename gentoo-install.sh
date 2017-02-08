@@ -38,33 +38,28 @@
 # This is all very rough at the moment, and it's strictly a "works for my
 # systems, on mt network" thing. Hopefully things improve and are generalized.
 # Patches very welcome.
-
 #Mirror for portage snapshot and stage3 tarball
-MIRROR=http://mirror.mcs.anl.gov/
+MIRROR=http://ftp.swin.edu.au/
 
 #Rsync mirror
-SYNC=rsync://wash.firefly.michael.mol.name/gentoo-portage
-
-#HTTP proxy
-http_proxy=http://wash.firefly.michael.mol.name:8123
+SYNC=rsync://rsync.cn.gentoo.org/gentoo-portage/
 
 #Mirror base path
-MIRROR_BASE_PATH=pub/gentoo/
+MIRROR_BASE_PATH=gentoo/
 
 #stage 3 relative path
-STAGE_PATH=releases/amd64/current-stage3/
+STAGE_PATH=releases/amd64/autobuilds/current-stage3-amd64/
 
 #portage snapshot relative path
 PORTAGE_PATH=snapshots/
 
 #Stage3 tarball
-STAGE_BALL=stage3-amd64-20120621.tar.bz2
+STAGE_BALL=stage3-amd64-20170202.tar.bz2
 
-#Portage snapshot tarball
-PORTAGE_SNAPSHOT=portage-latest.tar.bz2
+PORTAGE_SNAPSHOT=portage-20170130.tar.xz
 
 #Root filesystem device
-ROOTDEV=/dev/md127
+ROOTDEV=/dev/sda3
 
 #Boot filesystem UUID
 FS_BOOT_UUID=3d43226b-ff73-4369-829c-bd5cf90b3063
@@ -77,7 +72,7 @@ FS_ROOT_UUID=""
 
 ETC_CONFD_HOSTNAME="boombox"
 
-ETC_TIMEZONE="America/Detroit"
+ETC_TIMEZONE="Asia/Kolkata"
 
 KERNEL_SOURCES="sys-kernel/gentoo-sources"
 
@@ -154,7 +149,6 @@ logger "Gentoo install: Creating the filesystem"
 mkfs.ext4 -F "$ROOTDEV"
 
 logger "Gentoo install: Extracting the root filesystem's UUID."
-FS_ROOT_UUID=$(tune2fs -l "$ROOTDEV"|grep "Filesystem UUID"|cut -f2 -d:|sed -e 's/ \+//')
 
 logger "Gentoo install: Mounting the filesystem"
 
@@ -193,12 +187,9 @@ logger "Gentoo install: Copying autodiscovered DNS details"
 
 cp -L /etc/resolv.conf /mnt/gentoo/etc/resolv.conf
 
-logger "Gentoo install: Installing proxy details into install environment"
-echo "http_proxy=$http_proxy" > /mnt/gentoo/etc/env.d/02proxy
-
 logger "Gentoo install: Mounting dev, proc, etc in target environment"
 
-mount -t proc none /mnt/gentoo/proc
+mount -t proc proc/ /mnt/gentoo/proc
 if [[ $? -ne 0 ]]; then exit 1; fi
 mount --rbind /dev /mnt/gentoo/dev/
 if [[ $? -ne 0 ]]; then exit 1; fi
