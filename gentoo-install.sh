@@ -61,24 +61,11 @@ PORTAGE_SNAPSHOT=portage-20170130.tar.xz
 #Root filesystem device
 ROOTDEV=/dev/sda3
 
-#Boot filesystem UUID
-FS_BOOT_UUID=3d43226b-ff73-4369-829c-bd5cf90b3063
-#Swap filesystem UUID
-FS_SWAP_UUID=f2a33afa-8d3c-4b57-849f-41fc03210b59
-#home filesystem UUID
-FS_HOME_UUID=d7c17623-255b-4313-b50b-99f0f79a0681
-#assigned later
-FS_ROOT_UUID=""
-
 ETC_CONFD_HOSTNAME="boombox"
 
 ETC_TIMEZONE="Asia/Kolkata"
 
 KERNEL_SOURCES="sys-kernel/gentoo-sources"
-
-read -r -d '' ETC_CONFD_NET_FILE_CONTENT <<'EOF'
-config_eth0="dhcp"
-EOF
 
 #make.conf
 
@@ -98,12 +85,12 @@ SYS_USE_LANG="perl python"
 SYS_USE_TOOLKITS="gtk"
 SYS_USE_GAPI="gd sdl ncurses xcb opengl v4l vdpau xv X dri"
 SYS_USE_AAPI="openal alsa"
-SYS_USE_OTHER="acl alsa cdr crypt cups dvd dvdr firefox gmp iconv nsplugin offensive pcre pda rss spell taglib truetype videos vim-syntax xattr xcomposite xft xinerama xml xscreensaver fontconfig qt3support phonon"
+SYS_USE_OTHER="acl alsa cdr crypt cups dvd dvdr firefox gmp iconv nsplugin offensive pcre pda rss spell taglib truetype videos vim-syntax xattr xcomposite xft xinerama xml fontconfig qt3support phonon"
 SYS_USE_COMPRESSION="bzip2 gzip lzma lzo szip zlib"
 SYS_USE_MEDIA_GFX="imagemagick jpeg jpeg2k openexr png raw svg tiff wmf mng"
 SYS_USE_MEDIA_AUDIO="aac cdda flac gsm lame mad mikmod shorten speex timidity vorbis mp3 midi"
 SYS_USE_MEDIA_VIDEO="css dv ffmpeg theora x264 xvid"
-SYS_USE_MEDIA_CONTAINERS="matroska mms mp4 mpeg ogg pdf vcd"
+SYS_USE_MEDIA_CONTAINERS="matroska mms mp3 mp4 mpeg ogg pdf vcd"
 SYS_USE_MEDIA="${SYS_USE_MEDIA_GFX} ${SYS_USE_MEDIA_AUDIO} ${SYS_USE_MEDIA_VIDEO} ${SYS_USE_MEDIA_CONTAINERS} sound cddb encode exif gimp libsamplerate mtp ppds sndfile sox wavpack xmp latex"
 
 SYS_USE_NET="avahi curl ftp geoip gnutls ipv6 libwww rdesktop samba sockets ssl tcpd vnc"
@@ -111,7 +98,7 @@ SYS_USE_PLATFORM="acpi dbus fam hddtemp ieee1394 joystick libnotify lm_sensors p
 
 SYS_USE_DONOTWANT="-pulseaudio -oss -berkdb -gdbm"
 
-USE="${SYS_USE_CPU} -gnome -kde -minimal -qt4 dbus jpeg lock session startup-notification thunar udev X" ${SYS_USE_LANG} ${SYS_USE_TOOLKITS} ${SYS_USE_GAPI} ${SYS_USE_AAPI} ${SYS_USE_OTHER} ${SYS_USE_MEDIA} ${SYS_USE_COMPRESSION} ${SYS_USE_NET} ${SYS_USE_PLATFORM} ${SYS_USE_DONOTWANT}"
+USE="${SYS_USE_CPU} cxx lm_sensors java dbus doc audit bash-completion branding -gnome -kde -minimal -qt4 dbus jpeg lock session startup-notification thunar udev X" ${SYS_USE_LANG} ${SYS_USE_TOOLKITS} ${SYS_USE_GAPI} ${SYS_USE_AAPI} ${SYS_USE_OTHER} ${SYS_USE_MEDIA} ${SYS_USE_COMPRESSION} ${SYS_USE_NET} ${SYS_USE_PLATFORM} ${SYS_USE_DONOTWANT}"
 
 GENTOO_MIRRORS="http://chi-10g-1-mirror.fastsoft.net/pub/linux/gentoo/gentoo-distfiles/ http://mirrors.cs.wmich.edu/gentoo http://gentoo.mirrors.tds.net/gentoo"
 
